@@ -199,7 +199,7 @@ class cServo(object):
 #   setServoPosition    - high level function to set camera angle
 #   forceStop           - emergency servo kill
 class pixyBot(object):
-    def __init__(self, servoCorrection=0, gimbal=PID_controller(0.06, 0, 0.06), pi=None, pin_Servo=14, pin_mL=15, pin_mR=18):
+    def __init__(self, servoCorrection=0, gimbal=PID_controller(0.06, 0, 0.06), pi=None, pin_Servo=14, pin_mL=18, pin_mR=15):
         # low level robot control
         if not pi == None:
             self.pi = pi
@@ -237,7 +237,7 @@ class pixyBot(object):
     # runTime           - (optional, default 0) length of time wheels run for, 0 for indefinite (>=0)
     # mode              - (optional, default 0) boolean for brownout protection & ramping speed on/off (0/1)
     def setMotorSpeeds(self, mL_speed, mR_speed, runTime=0, mode=1):
-        cServo.setSpeed(self.motorList, [-mL_speed, mR_speed], mode)
+        cServo.setSpeed(self.motorList, [mL_speed, -mR_speed], mode)
 
         # run for set amount of time, blocking
         if runTime > 0:
