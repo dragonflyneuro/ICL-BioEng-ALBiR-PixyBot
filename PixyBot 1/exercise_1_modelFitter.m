@@ -2,7 +2,7 @@
 % use the turning pad to test the settings-speeds couplings and get
 % that perfect dead reckoning for your pixyBot!
 % made by DK
-% last edited Daniel Ko 20/01/2020
+% last edited Daniel Ko 16/02/2021
 
 clear;
 close all;
@@ -15,14 +15,14 @@ clc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 leftWheelForwardsSettings = 0.2:0.2:1;
-rightWheelForwardsSettings = 0.2:0.2:1;  % in our case, the right wheel did not move at 0.2 throttle so we omit it
-leftWheelForwardsPerSec = [540,810,990,1020,1030]/4;
-rightWheelForwardsPerSec = [410,740,980,1050,1050]/4;
+rightWheelForwardsSettings = 0.2:0.2:1;
+leftWheelForwardsDeg = [820,1270,1540,1560,1570];
+rightWheelForwardsDeg = [840,1330,1550,1600,1630];
 
 leftWheelBackwardsSettings = -0.2:-0.2:-1;
 rightWheelBackwardsSettings = -0.2:-0.2:-1;
-leftWheelBackwardsPerSec = [510,800,910,970,980]/4;
-rightWheelBackwardsPerSec = [650,880,980,990,990]/4;
+leftWheelBackwardsDeg = [820,1300,1510,1540,1560];
+rightWheelBackwardsDeg = [720,1000,1340,1570,1570];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -32,18 +32,18 @@ f = figure;
 ax = [subplot(1,2,1), subplot(1,2,2)];
 
 % normalise speeds to lowest common maximum speed between the two wheels
-minMaxSpeed = min([max(abs(leftWheelForwardsPerSec)), max(abs(rightWheelForwardsPerSec))]);
-leftVal = leftWheelForwardsPerSec/minMaxSpeed;
-rightVal = rightWheelForwardsPerSec/minMaxSpeed;
+minMaxSpeed = min([max(abs(leftWheelForwardsDeg)), max(abs(rightWheelForwardsDeg))]);
+leftVal = leftWheelForwardsDeg/minMaxSpeed;
+rightVal = rightWheelForwardsDeg/minMaxSpeed;
 
 % fit sine wave to data
 leftFMdl = sineModelFit(ax(2),leftWheelForwardsSettings,leftVal,'b');
 rightFMdl = sineModelFit(ax(2),rightWheelForwardsSettings,rightVal,'r');
 
 % normalise speeds to lowest common maximum speed between the two wheels
-minMaxSpeed = min([max(abs(leftWheelBackwardsPerSec)), max(abs(rightWheelBackwardsPerSec))]);
-leftVal = -leftWheelBackwardsPerSec/minMaxSpeed;
-rightVal = -rightWheelBackwardsPerSec/minMaxSpeed;
+minMaxSpeed = min([max(abs(leftWheelBackwardsDeg)), max(abs(rightWheelBackwardsDeg))]);
+leftVal = -leftWheelBackwardsDeg/minMaxSpeed;
+rightVal = -rightWheelBackwardsDeg/minMaxSpeed;
 
 % fit sine wave to data
 leftBMdl = sineModelFit(ax(1),leftWheelBackwardsSettings,leftVal,'b');
