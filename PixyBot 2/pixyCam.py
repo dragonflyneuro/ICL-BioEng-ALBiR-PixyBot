@@ -34,7 +34,7 @@ from math import pi
 #   isBiggestSig        - check whether or not the biggest detected block has the queried colour
 #   isInView            - find the first block in view with the queried colour
 class pixyCam(object):
-    def __init__(self, numBlocks=100):
+    def __init__(self, numBlocks=40):
         self.pixy = pixy
         self.pixy.init()
 
@@ -111,7 +111,7 @@ class pixyCam(object):
         idx = -1
         if (self.newCount > 0 and self.blocksAreNew()): # check if blocks are valid
             # iterate through newBlocks and return the index of the first signature match or -1
-            for i in range(self.newCount):
+            for i in range(self.numBlocks):
                 if self.newBlocks[i].m_signature == ID:
                     idx = i
                     break
